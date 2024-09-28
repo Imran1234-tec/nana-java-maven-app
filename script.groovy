@@ -1,7 +1,15 @@
 def buildJar() {
-    echo "building the application..."
-    sh 'mvn package'
-} 
+    echo "Building the application..."
+    try {
+        sh 'mvn package'
+        echo "Build successful!"
+    } catch (Exception e) {
+        echo "Build failed: ${e.getMessage()}"
+        currentBuild.result = 'FAILURE'
+        error("Stopping the build due to the failure.")
+    }
+}
+
 
 def buildImage() {
     echo "building the docker image..."
