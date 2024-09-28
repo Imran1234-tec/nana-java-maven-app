@@ -1,7 +1,8 @@
 def buildJar() {
     echo "Building the application..."
     try {
-        sh 'mvn package'
+        def output = sh(script: 'mvn package', returnStdout: true).trim()
+        echo output
         echo "Build successful!"
     } catch (Exception e) {
         echo "Build failed: ${e.getMessage()}"
@@ -11,14 +12,23 @@ def buildJar() {
 }
 
 
+
 def buildImage() {
-    echo "building the docker image..."
+    echo "Building the Docker image..."
     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+        // Verify that the Dockerfile is present
+        sh 'ls -al'
+
+        // Build the Docker image
         sh 'docker build -t nanajanashia/demo-app:jma-2.0 .'
-        sh "echo $PASS | docker login -u $USER --password-stdin"
-        sh 'docker push nanajanashia/demo-app:jma-2.0'
+
+        // Log in to Docker Hub
+        sh "echo Aws@-20252025 | docker login -u imran12345 --password-stdin"
+
+        // Push the Docker image
+        sh 'docker push imrannanajanashia/demo-app:jma-2.0'
     }
-} 
+}
 
 def deployApp() {
     echo 'deploying the application...'
