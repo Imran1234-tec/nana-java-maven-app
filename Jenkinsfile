@@ -1,40 +1,72 @@
-def gv
+// def gv
+
+// pipeline {
+//     agent any
+//     stages {
+//         stage("init") {
+//             steps {
+//                 script {
+//                     gv = load "script.groovy"
+//                 }
+//             }
+//         }
+
+//         stage('Build') {
+//             steps {
+//                 script {
+//                     echo "creating build jar"
+//                     gv.buildJar()
+//                 }
+//             }
+//         }
+//     }
+// }
+//         stage("build image") {
+//             steps {
+//                 script {
+//                     echo "building image"
+//                     gv.buildImage()
+//                 }
+//             }
+//         }
+//         stage("deploy") {
+//             steps {
+//                 script {
+//                     echo "deploying"
+//                     gv.deployApp()
+//                 }
+//             }
+//         }
+
+
+
+
 
 pipeline {
     agent any
+
     stages {
-        stage("init") {
+        stage('Build JAR') {
             steps {
                 script {
-                    gv = load "script.groovy"
+                    buildJar()
                 }
             }
         }
-
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
                 script {
-                    echo "creating build jar"
-                    gv.buildJar()
+                    buildImage()
+                }
+            }
+        }
+        stage('Deploy Application') {
+            steps {
+                script {
+                    deployApp()
                 }
             }
         }
     }
 }
-        stage("build image") {
-            steps {
-                script {
-                    echo "building image"
-                    gv.buildImage()
-                }
-            }
-        }
-        stage("deploy") {
-            steps {
-                script {
-                    echo "deploying"
-                    gv.deployApp()
-                }
-            }
-        }
 
