@@ -1,72 +1,38 @@
-// def gv
-
-// pipeline {
-//     agent any
-//     stages {
-//         stage("init") {
-//             steps {
-//                 script {
-//                     gv = load "script.groovy"
-//                 }
-//             }
-//         }
-
-//         stage('Build') {
-//             steps {
-//                 script {
-//                     echo "creating build jar"
-//                     gv.buildJar()
-//                 }
-//             }
-//         }
-//     }
-// }
-//         stage("build image") {
-//             steps {
-//                 script {
-//                     echo "building image"
-//                     gv.buildImage()
-//                 }
-//             }
-//         }
-//         stage("deploy") {
-//             steps {
-//                 script {
-//                     echo "deploying"
-//                     gv.deployApp()
-//                 }
-//             }
-//         }
-
-
-
-
+def gv
 
 pipeline {
     agent any
-
     stages {
-        stage('Build JAR') {
+        stage("init") {
             steps {
                 script {
-                    buildJar()
+                    gv = load "script.groovy"
                 }
             }
         }
-        stage('Build Docker Image') {
+        stage("build jar") {
             steps {
                 script {
-                    buildImage()
+                    echo "building jar"
+                    //gv.buildJar()
                 }
             }
         }
-        stage('Deploy Application') {
+        stage("build image") {
             steps {
                 script {
-                    deployApp()
+                    echo "building image"
+                    //gv.buildImage()
                 }
             }
         }
-    }
+        stage("deploy") {
+            steps {
+                script {
+                    echo "deploying"
+                    //gv.deployApp()
+                }
+            }
+        }
+    }   
 }
-
