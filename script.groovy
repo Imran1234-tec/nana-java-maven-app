@@ -23,7 +23,7 @@ def buildImage() {
         sh 'docker build -t nanajanashia/demo-app:jma-2.0 .'
 
         // Log in to Docker Hub
-        sh "echo Aws@-20252025 | docker login -u imran12345 --password-stdin"
+        sh "echo ${PASS} | docker login -u ${USER} --password-stdin"
 
         // Push the Docker image
         sh 'docker push imrannanajanashia/demo-app:jma-2.0'
